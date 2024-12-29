@@ -290,7 +290,8 @@ rm(var)
 ### Save data ----------------------- ----------------------- ----------------------- -----------------------
 
 write.csv(baseline, "02 processed data/baseline_20241229.csv", row.names = FALSE)
-write.csv(baseline_mplus, "02 processed data/baseline_mplus_20241229.csv", row.names = FALSE)
+write.table(baseline_mplus, "02 processed data/baseline_mplus_20241229.csv", sep=",", row.names = FALSE, col.names = FALSE)
+
 
 
 
