@@ -292,83 +292,102 @@ rm(var)
 write.csv(baseline, "02 processed data/baseline_20241229.csv", row.names = FALSE)
 write.table(baseline_mplus, "02 processed data/baseline_mplus_20241229.csv", sep=",", row.names = FALSE, col.names = FALSE)
 
+colnames(baseline_mplus)
 
 
 
 ### Clean up data imputations ----------------------- ----------------------- ----------------------- -----------------------
 
-filenames <- list.files("02 Analysis/Mplus", pattern="*.csv")
-filenames <- filenames[grep("20241112", filenames)]
+filenames <- list.files("03 scripts/Mplus", pattern="*.csv")
+filenames <- filenames[grep("raw", filenames)]
 listname <- filenames[grep("list", filenames)]
 filenames <- filenames[-grep("list", filenames)]
-cnames <- c("school1", "school2", "school3", "school4",
-            "level1", "level2", "level3",
-            "age", "gender",
-            "c_ab2", "c_ab3", "c_ab4", "c_ab5", "c_ab6", "c_ab8",
-            "c_po2", 
-            "c_da1", "c_da2", "c_da3",
-            "c_ge1", "c_ge2", "c_ge3", "c_ge4", "c_ge5",
-            "c_ab7",
-            "c_ef2", "c_ef3", "c_ef5",
-            "c_ne2", "c_ne4", 
-            "c_pi1", "c_pi2", "c_pi3", "c_pi4",
-            "e_ab2", "e_ab3", "e_ab4", "e_ab5", "e_ab6", "e_ab8",
-            "e_da1", "e_da3",
-            "e_ge1", "e_ge3", "e_ge4", "e_ge5",
-            "e_ef2", "e_ef3", "e_ef5",
-            "e_ne1", "e_ne2", "e_ne3", "e_ne4",
-            "e_oe2",
-            "e_pi2", "e_pi3", "e_pi4",
-            "k_ab2", "k_ab3", "k_ab4", "k_ab5", "k_ab6", "k_ab8",
-            "k_da1", "k_da3",
-            "k_ge1", "k_ge3", "k_ge4", "k_ge5",
-            "k_ef2", "k_ef3", "k_ef5",
-            "k_ne1", "k_ne2", "k_ne3", "k_ne4",
-            "k_oe2",
-            "k_pi2", "k_pi3", "k_pi4",
-            "m_ab2", "m_ab3", "m_ab4", "m_ab5", "m_ab6", "m_ab8",
-            "m_po2",
-            "m_da1", "m_da2", "m_da3",
-            "m_ge1", "m_ge2", "m_ge3", "m_ge4", "m_ge5",
-            "m_ab7",
-            "m_ef2", "m_ef3", "m_ef5",
-            "m_ne2", "m_ne4",
-            "m_pi1", "m_pi2", "m_pi3", "m_pi4",
-            "biology", "chemistr", "english", "entrepre",
-            "french", "geograph", "history", "ict",
-            "kinyarwa", "kiswahil", "literatu", "mathemat",
-            "mdd", "sports", "physics", "religion")
-motivation <- c("c_ab2", "c_ab3", "c_ab4", "c_ab5", "c_ab6", "c_ab7", "c_ab8",
-                "c_po2",
-                "c_da1", "c_da2", "c_da3",
-                "c_ge1", "c_ge2", "c_ge3", "c_ge4", "c_ge5",
-                "c_ef2", "c_ef3", "c_ef5", 
-                "c_ne2", "c_ne4",
-                "c_pi1", "c_pi2", "c_pi3", "c_pi4",
-                "e_ab2", "e_ab3", "e_ab4", "e_ab5", "e_ab6", "e_ab8",
-                "e_da1", "e_da3", 
-                "e_ge1", "e_ge3", "e_ge4", "e_ge5",
-                "e_ef2", "e_ef3", "e_ef5", 
-                "e_ne1", "e_ne2", "e_ne3", "e_ne4",
-                "e_oe2",
-                "e_pi2", "e_pi3", "e_pi4",
-                "k_ab2", "k_ab3", "k_ab4", "k_ab5", "k_ab6", "k_ab8",
-                "k_da1", "k_da3",
-                "k_ge1", "k_ge3", "k_ge4", "k_ge5",
-                "k_ef2", "k_ef3", "k_ef5",
-                "k_ne1", "k_ne2", "k_ne3", "k_ne4",
-                "k_oe2",
-                "k_pi2", "k_pi3", "k_pi4",
-                "m_ab2", "m_ab3", "m_ab4", "m_ab5", "m_ab6", "m_ab7", "m_ab8",
-                "m_po2",
-                "m_da1", "m_da2", "m_da3",
-                "m_ge1", "m_ge2", "m_ge3", "m_ge4", "m_ge5",
-                "m_ef2", "m_ef3", "m_ef5",
-                "m_ne2", "m_ne4")
-
+cnames <- c("AGE",	"GENDER",					
+            "SCHOOL1",	"SCHOOL2",	"SCHOOL3",				
+            "LEVEL2",	"LEVEL3",					
+            "C_AB2",	"C_AB3",	"C_AB4",	"C_AB5",	"C_AB6",	"C_AB7",	"C_AB8",
+            "C_DA1",	"C_DA2",	"C_DA3",				
+            "C_EF2",	"C_EF3",	"C_EF5",				
+            "C_GE1",	"C_GE2",	"C_GE3",	"C_GE4",	"C_GE5",		
+            "C_NE2",	"C_NE4",					
+            "C_PI1",	"C_PI2",	"C_PI3",	"C_PI4",			
+            "C_PO2",						
+            "E_AB2",	"E_AB3",	"E_AB4",	"E_AB5",	"E_AB6",	"E_AB8",	
+            "E_DA1",	"E_DA3",					
+            "E_EF2",	"E_EF3",	"E_EF5",				
+            "E_GE1",	"E_GE3",	"E_GE4",	"E_GE5",			
+            "E_NE1",	"E_NE2",	"E_NE3",	"E_NE4",			
+            "E_OE2",						
+            "E_PI2",	"E_PI3",	"E_PI4",				
+            "K_AB2",	"K_AB3",	"K_AB4",	"K_AB5",	"K_AB6",	"K_AB8",	
+            "K_DA1",	"K_DA3",	"K_EF2",				
+            "K_EF3",	"K_EF5",	"K_GE1",				
+            "K_GE3",	"K_GE4",	"K_GE5",				
+            "K_NE1",	"K_NE2",	"K_NE3",	"K_NE4",			
+            "K_OE2",						
+            "K_PI2",	"K_PI3",	"K_PI4",				
+            "M_AB2",	"M_AB3",	"M_AB4",	"M_AB5",	"M_AB6",	"M_AB7",	"M_AB8",
+            "M_DA1",	"M_DA2",	"M_DA3",				
+            "M_EF2",	"M_EF3",	"M_EF5",				
+            "M_GE1",	"M_GE2",	"M_GE3",	"M_GE4",	"M_GE5",		
+            "M_NE2",	"M_NE4",					
+            "M_PI1",	"M_PI2",	"M_PI3",	"M_PI4",			
+            "M_PO2",						
+            "SNO_BASE",						
+            "SCHOOL4",						
+            "LEVEL1",						
+            "school_marks",	"school_marks_CAT",	"school_marks_EX",	"school_marks_TOT",	"school_marks_Annual",		
+            "MISTAKE",						
+            "C_AB5_R",	"M_EF5_R",	"M_GE4_R",	"M_NE2_R",			
+            "C_AB5_F",	"M_EF5_F",	"M_GE4_F",	"M_NE2_F",			
+            "Biology_CAT",	"Biology_EX",	"Biology_TOT",	"Biology_Annual",			
+            "Chemistry_CAT",	"Chemistry_EX",	"Chemistry_TOT",	"Chemistry_Annual",			
+            "Entrepreneurship_CAT",	"Entrepreneurship_EX",	"Entrepreneurship_TOT",	"Entrepreneurship_Annual",			
+            "English_CAT",	"English_EX",	"English_TOT",	"English_Annual",			
+            "French_CAT",	"French_EX",	"French_TOT",	"French_Annual",			
+            "Geography_CAT",	"Geography_EX",	"Geography_TOT",	"Geography_Annual",			
+            "History_CAT",	"History_EX",	"History_TOT",	"History_Annual",			
+            "ICT_CAT",	"ICT_EX",	"ICT_TOT",	"ICT_Annual",			
+            "Kinyarwanda_CAT",	"Kinyarwanda_EX",	"Kinyarwanda_TOT",	"Kinyarwanda_Annual",			
+            "Kiswahili_CAT",	"Kiswahili_EX",	"Kiswahili_TOT",	"Kiswahili_Annual",			
+            "Literature_CAT",	"Literature_EX",	"Literature_TOT",	"Literature_Annual",			
+            "Mathematics_CAT",	"Mathematics_EX",	"Mathematics_TOT",	"Mathematics_Annual",			
+            "Physics_CAT",	"Physics_EX",	"Physics_TOT",	"Physics_Annual",			
+            "Religion_CAT",	"Religion_EX",	"Religion_TOT",	"Religion_Annual",			
+            "Sports_CAT",	"Sports_EX",	"Sports_TOT",	"Sports_Annual")
+motivation <- c("C_AB2",	"C_AB3",	"C_AB4",	"C_AB5",	"C_AB6",	"C_AB7",	"C_AB8",
+                "C_DA1",	"C_DA2",	"C_DA3",				
+                "C_EF2",	"C_EF3",	"C_EF5",				
+                "C_GE1",	"C_GE2",	"C_GE3",	"C_GE4",	"C_GE5",		
+                "C_NE2",	"C_NE4",					
+                "C_PI1",	"C_PI2",	"C_PI3",	"C_PI4",			
+                "C_PO2",						
+                "E_AB2",	"E_AB3",	"E_AB4",	"E_AB5",	"E_AB6",	"E_AB8",	
+                "E_DA1",	"E_DA3",					
+                "E_EF2",	"E_EF3",	"E_EF5",				
+                "E_GE1",	"E_GE3",	"E_GE4",	"E_GE5",			
+                "E_NE1",	"E_NE2",	"E_NE3",	"E_NE4",			
+                "E_OE2",						
+                "E_PI2",	"E_PI3",	"E_PI4",				
+                "K_AB2",	"K_AB3",	"K_AB4",	"K_AB5",	"K_AB6",	"K_AB8",	
+                "K_DA1",	"K_DA3",	
+                "K_EF2",  "K_EF3",	"K_EF5",	
+                "K_GE1",  "K_GE3",	"K_GE4",	"K_GE5",				
+                "K_NE1",	"K_NE2",	"K_NE3",	"K_NE4",			
+                "K_OE2",						
+                "K_PI2",	"K_PI3",	"K_PI4",				
+                "M_AB2",	"M_AB3",	"M_AB4",	"M_AB5",	"M_AB6",	"M_AB7", "M_AB8",
+                "M_DA1",	"M_DA2",	"M_DA3",				
+                "M_EF2",	"M_EF3",	"M_EF5",				
+                "M_GE1",	"M_GE2",	"M_GE3",	"M_GE4",	"M_GE5",		
+                "M_NE2",	"M_NE4",					
+                "M_PI1",	"M_PI2",	"M_PI3",	"M_PI4",			
+                "M_PO2")
+cnames <- tolower(cnames)
+motivation <- tolower(motivation)
 
 for(file in filenames) {
-  file <- paste0("02 Analysis/Mplus/", file)
+  file <- paste0("03 scripts/Mplus/", file)
   data <- as.data.frame(read.csv(file, header = FALSE))
   data$V1 <- gsub(" ", "x", data$V1)
   data$V1 <- gsub("xxxxx", "x", data$V1)
@@ -383,142 +402,89 @@ for(file in filenames) {
     mutate(age = as.integer(age)) %>%
     mutate(location = ifelse(school1 == 1 | school3 == 1, 1, 0)) %>%
     select(school1, school2, school3, school4, location, everything())
-  filename <- gsub("02 Analysis/Mplus/", "01 Data/", file)
+  
+  data <- data %>%
+    select(sno_base,						
+           school1,	school2,	school3,	school4,			
+           level1,	level2,	level3,				
+           age,	gender,					
+           c_ab2,	c_ab3,	c_ab4,	c_ab5,	c_ab6,	c_ab7,	c_ab8,
+           c_da1,	c_da2,	c_da3,				
+           c_ef2,	c_ef3,	c_ef5,				
+           c_ge1,	c_ge2,	c_ge3,	c_ge4,	c_ge5,		
+           c_ne2,	c_ne4,					
+           c_pi1,	c_pi2,	c_pi3,	c_pi4,			
+           c_po2,						
+           e_ab2,	e_ab3,	e_ab4,	e_ab5,	e_ab6,	e_ab8,	
+           e_da1,	e_da3,					
+           e_ef2,	e_ef3,	e_ef5,				
+           e_ge1,	e_ge3,	e_ge4,	e_ge5,			
+           e_ne1,	e_ne2,	e_ne3,	e_ne4,			
+           e_oe2,						
+           e_pi2,	e_pi3,	e_pi4,				
+           k_ab2,	k_ab3,	k_ab4,	k_ab5,	k_ab6,	k_ab8,	
+           k_da1,	k_da3,	k_ef2,				
+           k_ef3,	k_ef5,	k_ge1,				
+           k_ge3,	k_ge4,	k_ge5,				
+           k_ne1,	k_ne2,	k_ne3,	k_ne4,			
+           k_oe2,						
+           k_pi2,	k_pi3,	k_pi4,				
+           m_ab2,	m_ab3,	m_ab4,	m_ab5,	m_ab6,	m_ab7,	m_ab8,
+           m_da1,	m_da2,	m_da3,				
+           m_ef2,	m_ef3,	m_ef5,				
+           m_ge1,	m_ge2,	m_ge3,	m_ge4,	m_ge5,		
+           m_ne2,	m_ne4,					
+           m_pi1,	m_pi2,	m_pi3,	m_pi4,			
+           m_po2,						
+           school_marks,	school_marks_cat,	school_marks_ex,	school_marks_tot,	school_marks_annual,		
+           mistake,						
+           c_ab5_r,	m_ef5_r,	m_ge4_r,	m_ne2_r,			
+           c_ab5_f,	m_ef5_f,	m_ge4_f,	m_ne2_f,			
+           biology_cat,	biology_ex,	biology_tot,	biology_annual,			
+           chemistry_cat,	chemistry_ex,	chemistry_tot,	chemistry_annual,			
+           entrepreneurship_cat,	entrepreneurship_ex,	entrepreneurship_tot,	entrepreneurship_annual,			
+           english_cat,	english_ex,	english_tot,	english_annual,			
+           french_cat,	french_ex,	french_tot,	french_annual,			
+           geography_cat,	geography_ex,	geography_tot,	geography_annual,			
+           history_cat,	history_ex,	history_tot,	history_annual,			
+           ict_cat,	ict_ex,	ict_tot,	ict_annual,			
+           kinyarwanda_cat,	kinyarwanda_ex,	kinyarwanda_tot,	kinyarwanda_annual,			
+           kiswahili_cat,	kiswahili_ex,	kiswahili_tot,	kiswahili_annual,			
+           literature_cat,	literature_ex,	literature_tot,	literature_annual,			
+           mathematics_cat,	mathematics_ex,	mathematics_tot,	mathematics_annual,			
+           physics_cat,	physics_ex,	physics_tot,	physics_annual,			
+           religion_cat,	religion_ex,	religion_tot,	religion_annual,			
+           sports_cat,	sports_ex,	sports_tot,	sports_annual)
+  filename <- gsub("03 scripts/Mplus/", "02 processed data/", file)
+  filename <- gsub("raw_", "", filename)
   write.table(data, file = filename, sep=",", row.names = F, col.names=FALSE)
   
   ### in general, the first answer option is hardly selected. Thus, we create a two-options dataset
   
   data_bi <- data %>%
-    mutate(across(motivation, ~ ifelse(. < 3, 0, .))) %>%
+    mutate(across(motivation, ~ ifelse(. < 3 & . != -999, 0, .))) %>%
     mutate(across(motivation, ~ ifelse(. == 3, 1, .)))
-  write.table(data_bi, file = gsub("BL_", "BL_bi_",filename), sep=",", row.names = FALSE, col.names = FALSE)
+  filename <- gsub("baseline_", "baseline_BI_", filename)
+  write.table(data_bi, file = filename, sep=",", row.names = FALSE, col.names = FALSE)
   
 }
 
 for(file in listname[1]) {
-  file <- paste0("02 Analysis/Mplus/", file)
+  file <- paste0("03 scripts/Mplus/", file)
   data <- as.data.frame(read.csv(file, header = FALSE))
-  filename <- gsub("02 Analysis/Mplus/", "01 Data/", file)
+  data <- data %>%
+    mutate(V1 = gsub("raw_", "", V1))
+  filename <- gsub("03 scripts/Mplus/", "02 processed data/", file)
+  filename <- gsub("raw_", "", filename)
   write.table(data, file = filename, row.names = F,  col.names=FALSE, quote = FALSE)
+  
+  ### in general, the first answer option is hardly selected. Thus, we create a two-options dataset
+  
   data_bi <- data %>%
-    mutate(V1 = gsub("BL_", "BL_bi_",V1))
+    mutate(V1 = gsub("baseline_", "baseline_BI_", V1))
+  filename <- gsub("baseline_", "baseline_BI_", filename)
   write.table(data_bi, file = gsub("BL_", "BL_bi_",filename), sep=",", row.names = F, col.names=FALSE)
 }
+rm(data, data_bi, file, filename, filenames, cnames, listname, motivation)
 
-
-rm(data, file, filename, filenames, cnames, listname)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-write.csv(item_overview, "03 Results/baseline_item_overview_20241106.csv", row.names = F)
-
-
-
-
-
-### Create two-options dataset ----------------------- ----------------------- ----------------------- -----------------------
-# Look at file '03 Results/baseline_item_overview_edited_20241106.xlsx', it appears that some scales are centered around the middle option whereas
-# others seem to be centered on option 3. 
-
-motivation <- c("c_ab2", "c_ab3", "c_ab4", "c_ab5", "c_ab6", "c_ab7", "c_ab8",
-                "c_po2",
-                "c_da1", "c_da2", "c_da3",
-                "c_ge1", "c_ge2", "c_ge3", "c_ge4", "c_ge5",
-                "c_ef2", "c_ef3", "c_ef5", 
-                "c_ne2", "c_ne4",
-                "c_pi1", "c_pi2", "c_pi3", "c_pi4",
-                "e_ab2", "e_ab3", "e_ab4", "e_ab5", "e_ab6", "e_ab8",
-                "e_da1", "e_da3", 
-                "e_ge1", "e_ge3", "e_ge4", "e_ge5",
-                "e_ef2", "e_ef3", "e_ef5", 
-                "e_ne1", "e_ne2", "e_ne3", "e_ne4",
-                "e_oe2",
-                "e_pi2", "e_pi3", "e_pi4",
-                "k_ab2", "k_ab3", "k_ab4", "k_ab5", "k_ab6", "k_ab8",
-                "k_da1", "k_da3",
-                "k_ge1", "k_ge3", "k_ge4", "k_ge5",
-                "k_ef2", "k_ef3", "k_ef5",
-                "k_ne1", "k_ne2", "k_ne3", "k_ne4",
-                "k_oe2",
-                "k_pi2", "k_pi3", "k_pi4",
-                "m_ab2", "m_ab3", "m_ab4", "m_ab5", "m_ab6", "m_ab7", "m_ab8",
-                "m_po2",
-                "m_da1", "m_da2", "m_da3",
-                "m_ge1", "m_ge2", "m_ge3", "m_ge4", "m_ge5",
-                "m_ef2", "m_ef3", "m_ef5",
-                "m_ne2", "m_ne4"
-)
-
-item_overview <- data.frame(variable = as.character(), 
-                            "mean" = as.numeric(),
-                            "variance"  = as.numeric(),
-                            "skew" = as.numeric(),
-                            "kurt" = as.numeric(),
-                            "o1" = as.numeric(), 
-                            "o2" = as.numeric(), 
-                            "o3" = as.numeric())
-for( elem in motivation) {
-  new <- data.frame(variable = elem,
-                    "mean" = round(mean(baseline[ , which(colnames(baseline) == elem)], na.rm = TRUE), 2),
-                    "variance"  = round(var(baseline[ , which(colnames(baseline) == elem)], na.rm = TRUE), 2),
-                    "skew" = round(skew(baseline[ , which(colnames(baseline) == elem)]), 2),
-                    "kurt" = round(kurtosi(baseline[ , which(colnames(baseline) == elem)]), 2),
-                    "o1" = (round(prop.table(table(baseline[ , which(colnames(baseline) == elem)])), 4) * 100)[1],
-                    "o2" = (round(prop.table(table(baseline[ , which(colnames(baseline) == elem)])), 4) * 100)[2],
-                    "o3" = (round(prop.table(table(baseline[ , which(colnames(baseline) == elem)])), 4) * 100)[3])
-  item_overview <- rbind(item_overview, new)
-}
-
-### in general, the first answer option is hardly selected. Thus, we create a two-options dataset
-
-baseline_bi <- baseline %>%
-  mutate(across(motivation, ~ ifelse(. < 3, 0, .))) %>%
-  mutate(across(motivation, ~ ifelse(. == 3, 1, .)))
-
-item_overview_bi <- data.frame(variable = as.character(), 
-                               "mean" = as.numeric(),
-                               "variance"  = as.numeric(),
-                               "skew" = as.numeric(),
-                               "kurt" = as.numeric(),
-                               "o1" = as.numeric(), 
-                               "o2" = as.numeric(), 
-                               "o3" = as.numeric())
-for( elem in motivation) {
-  new <- data.frame(variable = elem,
-                    "mean" = round(mean(baseline_bi[ , which(colnames(baseline_bi) == elem)], na.rm = TRUE), 2),
-                    "variance"  = round(var(baseline_bi[ , which(colnames(baseline_bi) == elem)], na.rm = TRUE), 2),
-                    "skew" = round(skew(baseline_bi[ , which(colnames(baseline_bi) == elem)]), 2),
-                    "kurt" = round(kurtosi(baseline_bi[ , which(colnames(baseline_bi) == elem)]), 2),
-                    "o1" = (round(prop.table(table(baseline_bi[ , which(colnames(baseline_bi) == elem)])), 4) * 100)[1],
-                    "o2" = (round(prop.table(table(baseline_bi[ , which(colnames(baseline_bi) == elem)])), 4) * 100)[2],
-                    "o3" = (round(prop.table(table(baseline_bi[ , which(colnames(baseline_bi) == elem)])), 4) * 100)[3])
-  item_overview_bi <- rbind(item_overview_bi, new)
-  
-}
-#rm(motivation)
 

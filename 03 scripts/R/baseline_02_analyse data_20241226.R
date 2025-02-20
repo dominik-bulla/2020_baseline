@@ -34,6 +34,29 @@ motivation <- motivation[-grep("_r", motivation)]
 motivation <- motivation[-grep("_f", motivation)]
 rm(motivation1, motivation2, motivation3, motivation4)
 
+motivation_included <- c("ab2", "ab3", "ab4", "ab5", "ab6", "ab8", 
+                         "ef2", "ef3", "ef5", 
+                         "ge1", "ge3", "ge4", "ge5")
+motivation_included1 <- paste0("c_", motivation_included)
+motivation_included2 <- paste0("e_", motivation_included)
+motivation_included3 <- paste0("k_", motivation_included)
+motivation_included4 <- paste0("m_", motivation_included)
+motivation_included <- c(motivation_included1, motivation_included2, motivation_included3, motivation_included4)
+rm(motivation_included1, motivation_included2, motivation_included3, motivation_included4)
+
+missingness_included <- data.frame(included = rep(1, length(motivation_included)))
+row.names(missingness_included) <- motivation_included
+motivation_included_not <- motivation[-which(motivation %in% motivation_included)]
+missingness_included2 <- data.frame(included = rep(0, length(motivation_included_not)))
+row.names(missingness_included2) <- motivation_included_not
+
+missingness_included <- rbind(missingness_included, missingness_included2)
+missingness_included <- missingness_included %>% 
+  arrange(row.names(missingness_included))
+missingness_included2 <- data.frame(included = NA)
+row.names(missingness_included2) <- ""
+missingness_included <- rbind(missingness_included, missingness_included2)
+rm(motivation_included, motivation_included_not, missingness_included2)
 missingness_motivation <- as.data.frame(summary(baseline[, motivation])[7, ])
 row.names(missingness_motivation) <- motivation
 missingness_motivation <- missingness_motivation %>%
@@ -98,7 +121,7 @@ colnames(Total) <- colnames(missingness_motivation_rango)
 row.names(Total) <- "Total/ average"
 missingness_motivation_rango <- rbind(missingness_motivation_rango, Total)
 
-missingness_motivation <- cbind(missingness_motivation, missingness_motivation_kagarama, missingness_motivation_nyamata, missingness_motivation_nyanza, missingness_motivation_rango)
+missingness_motivation <- cbind(missingness_included, missingness_motivation, missingness_motivation_kagarama, missingness_motivation_nyamata, missingness_motivation_nyanza, missingness_motivation_rango)
 missingness_motivation2 <- missingness_motivation[nrow(missingness_motivation), ]
 missingness_motivation <- missingness_motivation[1 : (nrow(missingness_motivation) - 1), ] 
 missingness_motivation <- missingness_motivation %>%
@@ -194,7 +217,7 @@ colnames(Total) <- colnames(missingness_marks_rango)
 row.names(Total) <- "Max/ average"
 missingness_marks_rango <- rbind(missingness_marks_rango, Total)
 missingness_marks <- cbind(missingness_n, missingness_marks, missingness_marks_kagarama, missingness_marks_nyamata, missingness_marks_nyanza, missingness_marks_rango)
-rm(missingness_marks2, missingness_marks_kagarama, missingness_marks_nyamata, missingness_marks_nyanza, missingness_marks_rango, missingness_n, mark, Total)
+rm(missingness_marks_kagarama, missingness_marks_nyamata, missingness_marks_nyanza, missingness_marks_rango, missingness_n, mark, Total)
 
 
 

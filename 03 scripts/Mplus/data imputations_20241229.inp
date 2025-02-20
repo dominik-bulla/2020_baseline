@@ -1,0 +1,147 @@
+TITLE:  
+DATA IMPUTATIONS;
+
+DATA: 
+FILE IS "C:/Users/domin/GitHub/2020_baseline/02 processed data/
+baseline_mplus_20241229.csv";
+
+VARIABLE: 
+NAMES = 
+sno_baseline 
+school1 school2 school3 school4
+level1 level2 level3 consent 
+school_marks 
+school_marks_CAT school_marks_EX school_marks_TOT school_marks_Annual
+age gender
+c_ab2 c_ab3 c_ab4 c_ab5 c_ab6 c_ab7 c_ab8
+c_da1 c_da2 c_da3
+c_ef2 c_ef3 c_ef5
+c_ge1 c_ge2 c_ge3 c_ge4 c_ge5
+c_ne2 c_ne4
+c_pi1 c_pi2 c_pi3 c_pi4 
+c_po2
+e_ab2 e_ab3 e_ab4 e_ab5 e_ab6 e_ab8
+e_da1 e_da3
+e_ef2 e_ef3 e_ef5
+e_ge1 e_ge3 e_ge4 e_ge5
+e_ne1 e_ne2 e_ne3 e_ne4
+e_oe2
+e_pi2 e_pi3 e_pi4
+k_ab2 k_ab3 k_ab4 k_ab5 k_ab6 k_ab8
+k_da1 k_da3
+k_ef2 k_ef3 k_ef5
+k_ge1 k_ge3 k_ge4 k_ge5
+k_ne1 k_ne2 k_ne3 k_ne4
+k_oe2 
+k_pi2 k_pi3 k_pi4
+m_ab2 m_ab3 m_ab4 m_ab5 m_ab6 m_ab7 m_ab8
+m_da1 m_da2 m_da3
+m_ef2 m_ef3 m_ef5
+m_ge1 m_ge2 m_ge3 m_ge4 m_ge5 
+m_ne2 m_ne4 
+m_pi1 m_pi2 m_pi3 m_pi4
+m_po2
+mistake c_ab5_r m_ef5_r m_ge4_r m_ne2_r 
+c_ab5_f m_ef5_f m_ge4_f m_ne2_f
+Biology_CAT Biology_EX Biology_TOT Biology_Annual
+Chemistry_CAT Chemistry_EX Chemistry_TOT Chemistry_Annual
+Entrepreneurship_CAT Entrepreneurship_EX 
+Entrepreneurship_TOT Entrepreneurship_Annual
+English_CAT English_EX English_TOT English_Annual
+French_CAT French_EX French_TOT French_Annual
+Geography_CAT Geography_EX Geography_TOT Geography_Annual
+History_CAT History_EX History_TOT History_Annual
+ICT_CAT ICT_EX ICT_TOT ICT_Annual
+Kinyarwanda_CAT Kinyarwanda_EX Kinyarwanda_TOT
+Kinyarwanda_Annual
+Kiswahili_CAT Kiswahili_EX Kiswahili_TOT Kiswahili_Annual
+Literature_CAT Literature_EX Literature_TOT
+Literature_Annual
+Mathematics_CAT Mathematics_EX Mathematics_TOT Mathematics_Annual
+Physics_CAT Physics_EX Physics_TOT Physics_Annual
+Religion_CAT Religion_EX Religion_TOT Religion_Annual
+Sports_CAT Sports_EX Sports_TOT Sports_Annual;
+
+USEVARIABLES = 
+age gender
+school1 school2 school3
+level2 level3 
+c_ab2 c_ab3 c_ab4 c_ab5 c_ab6 c_ab7 c_ab8
+c_da1 c_da2 c_da3
+c_ef2 c_ef3 c_ef5
+c_ge1 c_ge2 c_ge3 c_ge4 c_ge5
+c_ne2 c_ne4
+c_pi1 c_pi2 c_pi3 c_pi4 
+c_po2
+e_ab2 e_ab3 e_ab4 e_ab5 e_ab6 e_ab8
+e_da1 e_da3
+e_ef2 e_ef3 e_ef5
+e_ge1 e_ge3 e_ge4 e_ge5
+e_ne1 e_ne2 e_ne3 e_ne4
+e_oe2
+e_pi2 e_pi3 e_pi4
+k_ab2 k_ab3 k_ab4 k_ab5 k_ab6 k_ab8
+k_da1 k_da3
+k_ef2 k_ef3 k_ef5
+k_ge1 k_ge3 k_ge4 k_ge5
+k_ne1 k_ne2 k_ne3 k_ne4
+k_oe2 
+k_pi2 k_pi3 k_pi4
+m_ab2 m_ab3 m_ab4 m_ab5 m_ab6 m_ab7 m_ab8
+m_da1 m_da2 m_da3
+m_ef2 m_ef3 m_ef5
+m_ge1 m_ge2 m_ge3 m_ge4 m_ge5 
+m_ne2 m_ne4 
+m_pi1 m_pi2 m_pi3 m_pi4
+m_po2;
+
+AUXILIARY = 
+sno_baseline 
+school4
+level1 
+school_marks 
+school_marks_CAT school_marks_EX school_marks_TOT school_marks_Annual
+mistake c_ab5_r m_ef5_r m_ge4_r m_ne2_r 
+c_ab5_f m_ef5_f m_ge4_f m_ne2_f
+Biology_CAT Biology_EX Biology_TOT Biology_Annual
+Chemistry_CAT Chemistry_EX Chemistry_TOT Chemistry_Annual
+Entrepreneurship_CAT Entrepreneurship_EX 
+Entrepreneurship_TOT Entrepreneurship_Annual
+English_CAT English_EX English_TOT English_Annual
+French_CAT French_EX French_TOT French_Annual
+Geography_CAT Geography_EX Geography_TOT Geography_Annual
+History_CAT History_EX History_TOT History_Annual
+ICT_CAT ICT_EX ICT_TOT ICT_Annual
+Kinyarwanda_CAT Kinyarwanda_EX Kinyarwanda_TOT
+Kinyarwanda_Annual
+Kiswahili_CAT Kiswahili_EX Kiswahili_TOT Kiswahili_Annual
+Literature_CAT Literature_EX Literature_TOT
+Literature_Annual
+Mathematics_CAT Mathematics_EX Mathematics_TOT Mathematics_Annual
+Physics_CAT Physics_EX Physics_TOT Physics_Annual
+Religion_CAT Religion_EX Religion_TOT Religion_Annual
+Sports_CAT Sports_EX Sports_TOT Sports_Annual;
+
+MISSING = ALL (-999); 
+DATA IMPUTATION: 
+IMPUTE = 
+age
+c_ab2(c) c_ab3(c) c_ab4(c) c_ab5(c) c_ab6(c) c_ab8(c)
+c_ef2(c) c_ef3(c) c_ef5(c)
+c_ge1(c) c_ge3(c) c_ge4(c) c_ge5(c)
+e_ab2(c) e_ab3(c) e_ab4(c) e_ab5(c) e_ab6(c) e_ab8(c)
+e_ef2(c) e_ef3(c) e_ef5(c)
+e_ge1(c) e_ge3(c) e_ge4(c) e_ge5(c)
+k_ab2(c) k_ab3(c) k_ab4(c) k_ab5(c) k_ab6(c) k_ab8(c)
+k_ef2(c) k_ef3(c) k_ef5(c)
+k_ge1(c) k_ge3(c) k_ge4(c) k_ge5(c)
+m_ab2(c) m_ab3(c) m_ab4(c) m_ab5(c) m_ab6(c) m_ab8(c)
+m_ef2(c) m_ef3(c) m_ef5(c)
+m_ge1(c) m_ge3(c) m_ge4(c) m_ge5(c);
+
+NDATASETS = 20; 
+SAVE = baseline_mplus_raw_20241229_*.csv;
+
+ANALYSIS: TYPE = BASIC;
+
+OUTPUT: TECH8;
